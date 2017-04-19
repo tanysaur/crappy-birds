@@ -25,7 +25,10 @@ div {
 }*/
 
 /*styling for gestures*/
-.highlight {
+
+  
+
+  .highlight {
     border: 5px red solid !important;
   }
 
@@ -48,7 +51,17 @@ div {
   }
 
   #right-col, #left-col {
-    border: 5px blue solid;
+    border: 2px blue solid;
   }  
+
+  .displayBlur{
+    filter: blur(10px);
+  }
+  
+  .blurOff{
+    filter: none;
+  }
+
+
 /*
   gestures*/

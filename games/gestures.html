@@ -11,72 +11,14 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
   <script src="https://js.leapmotion.com/leap-0.6.4.js"></script>
-  <script src="/socket.io/socket.io.js"></script>
-  <script src="index.js"></script>
-  <link rel="stylesheet" type="text/css" href="../public//css/index.css" />	
-  <script>
-
-    $(document).ready(function() {
-      window.controller = new Leap.Controller({enableGestures: true});
-
-      var swiper = controller.gesture('swipe');
-
-      var tolerance = 50;
-      var cooloff = 100;
-
-      var x = 1, y = 1;
-
-      var updateHighlight = function() {
-        $('.grid div').removeClass('highlight');
-        $('.grid #d'+x+"_"+y).addClass('highlight');
-      }
-
-      var slider = _.debounce(function(xDir, yDir) {
-        x += xDir;
-        x = (x + 4) % 4;
-        y += yDir;
-        y = (y + 4) % 4;
-        console.log("x:"+x);
-        console.log("y:"+y);
-
-        console.log('.grid #d'+x+"_"+y);
-        updateHighlight();
-      }, cooloff);
-
-      swiper.update(function(g) {
-        if (Math.abs(g.translation()[0]) > tolerance || Math.abs(g.translation()[1]) > tolerance) {
-          var xDir = Math.abs(g.translation()[0]) > tolerance ? (g.translation()[0] > 0 ? -1 : 1) : 0;
-          var yDir = Math.abs(g.translation()[1]) > tolerance ? (g.translation()[1] < 0 ? -1 : 1) : 0;
-          slider(xDir, yDir);
-        }
-      });
-
-      controller.connect();
-      updateHighlight();
-    })
-
-//===============
-
-
-// Game play
-$(document).keyup(function(event){
-
-    if (event.keyCode == 32){
-        console.log("false");
-    }
-}); 
-
-
-//================
-
-
-
-  </script>
+  <!--<script src="/socket.io/socket.io.js"></script>-->
+  <!--<script src="index.js"></script>-->
+  <script src="crappyBirdz.js"></script>
+  <link rel="stylesheet" type="text/css" href="../public/css/index.css" />	
  
 </head>
 <body>
 
-  
   <div class="container">
 
   <button onclick="controller.connection.enableGestures(true);">Enable Gestures</button>
@@ -86,55 +28,40 @@ $(document).keyup(function(event){
         <div id="left-col">
           <div class="grid">  
       
-            <div id="d0_0"><a href="bird"><img src="https://lh3.googleusercontent.com/DMTszu2AWSxaTy2xTHnPRdB_MuEerDAa82GQ_N_H6IAd-jWgAGJQL2xkg0JiEcWSfw=w300"</img></a></div>
-            
-            <div id="d1_0"></div>
-            <div id="d2_0"></div>
-            
-            <div id="d4_0"></div><br clear=both>
-            <div id="d0_1"></div>
-            <div id="d1_1"></div>              
-            <div id="d2_1"></div>
-            
-            <div id="d4_1"></div><br clear=both>
-            <div id="d0_2"></div>
-            <div id="d1_2"></div>
-            <div id="d2_2"></div>
-          
-            <div id="d4_2"></div><br clear=both>
-            <div id="d0_3"></div>
-            <div id="d1_3"></div>
-            <div id="d2_3"></div>
-            
-            <div id="d4_3"></div><br clear=both>
-            
+            <div class="displayBlur" id="d0_0"><a href="bird-poop"><img src="../public/images/bird.png"</img></a></div>           
+            <div class="displayBlur" id="d1_0"><a href="bird-poop"><img src="../public/images/bird.png"</img></a></div>
+            <div class="displayBlur" id="d2_0"><a href="bird-poop"><img src="../public/images/bird.png"</img></a></div>       
+            <div class="displayBlur" id="d4_0"><a href="bird-poop"><img src="../public/images/bird.png"</img></a></div><br clear=both>
+            <div class="displayBlur" id="d0_1"><a href="bird-poop"><img src="../public/images/bird.png"</img></a></div>
+            <div class="displayBlur" id="d1_1"><a href="bird-poop"><img src="../public/images/bird.png"</img></a></div>              
+            <div class="displayBlur" id="d2_1"><a href="bird-poop"><img src="../public/images/bird.png"</img></a></div>         
+            <div class="displayBlur" id="d4_1"><a href="bird-poop"><img src="../public/images/bird.png"</img></a></div><br clear=both>
+            <div class="displayBlur" id="d0_2"><a href="bird-poop"><img src="../public/images/bird.png"</img></a></div>
+            <div class="displayBlur" id="d1_2"><a href="bird-poop"><img src="../public/images/bird.png"</img></a></div>
+            <div class="displayBlur" id="d2_2"><a href="bird-poop"><img src="../public/images/bird.png"</img></a></div>        
+            <div class="displayBlur" id="d4_2"><a href="bird-poop"><img src="../public/images/bird.png"</img></a></div><br clear=both>
+            <div class="displayBlur" id="d0_3"><a href="bird-poop"><img src="../public/images/bird.png"</img></a></div>
+            <div class="displayBlur" id="d1_3"><a href="bird-poop"><img src="../public/images/bird.png"</img></a></div>
+            <div class="displayBlur" id="d2_3"><a href="bird-poop"><img src="../public/images/bird.png"</img></a></div>     
+            <div class="displayBlur" id="d4_3"><a href="bird-poop"><img src="../public/images/bird.png"</img></a></div><br clear=both>
+   
           </div>
         </div>
       </div>
 
       <div class="col-md-4">
-        <div id="right-col">
-         
-          <h1>That's worth: <strong id="picture_score"></strong>points!</h1>
-          <h2>Status: <strong id="game-status">Player 1 turn</strong> </h2>
+        <div id="right-col">         
+          <h1>That's worth: <strong id="picture_score">100</strong> points!</h1>
+          <h2>Status: it's player <strong id="game-status">2</strong> turn</h2>
           <div class="scores">
-            <h3>Player 1 score: <strong id="p1-score">01</strong> </h3>   
+            <h3>Player 1 score: <strong id="p1-score">1000</strong> </h3>   
           </div>
           <div class="scores">
-            <h3>Player 2 score: <strong id="p2-score">01</strong> </h3>
+            <h3>Player 2 score: <strong id="p2-score">-50</strong> </h3>
           </div>
-        </div>
-      
-      </div>
-     
-
-    </div>
-  
-    
-  
-    
- 
-    
+        </div>      
+      </div>     
+    </div>    
   </div>
 </body>
 </html>
