@@ -46,11 +46,14 @@ $(document).ready(function() {
 
       controller.connect();
       updateHighlight();
-    })
+});//docReady
+
+
+
 
 
 //====== Game Play ======
-// 
+
 $(document).ready(function(){
     resetBoard();
 }); // docReady
@@ -88,8 +91,9 @@ $(document).keyup(function(event){ // keypress? what is the leapmotion equivalen
                 item = {
                     picture: "pic1.jpg",
                     score: 50
-                }
-                gridArray [row][col];
+                };
+                gridArray[row][col];
+                //insert img to DOM, data-attr: picture value
             }
         }
 
@@ -98,15 +102,16 @@ $(document).keyup(function(event){ // keypress? what is the leapmotion equivalen
     function gameStarts(){
         while ( turns != 0){
             //p1 starts
-                //player chooses cell, if cell is used, show error
+                //player chooses cell, if cell is used, show error ======= leapmotion: rock
                 
+
                 //unblur picture
                 $("#" + d0_0).addClass("blurOff"); 
                 //show picture_score
 
                 scoreP1 += picture_score; 
 
-                //mark cell as used using its data attr, class="used"
+                //mark cell as used using its data attr, class="used", we can also use backend to store the score & or picture
 
                 //decrement turns
                 turns--;
@@ -115,6 +120,7 @@ $(document).keyup(function(event){ // keypress? what is the leapmotion equivalen
                 //computer chooses unused cell, 
 
                 //unblur picture of chosen cell
+                $("#" + d0_0).addClass("blurOff");
 
                 scoreP2 += picture_score;
 
@@ -124,6 +130,7 @@ $(document).keyup(function(event){ // keypress? what is the leapmotion equivalen
                 turns--;
         
         }
+        declareWinner();
 
     }//gameStarts
 
@@ -138,4 +145,5 @@ $(document).keyup(function(event){ // keypress? what is the leapmotion equivalen
             console.log("It's a tie!");
             $("#game-status").text("It's a tie!'");
            
+        }
     }//declare winner
