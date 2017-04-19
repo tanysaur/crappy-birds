@@ -9,10 +9,12 @@ var turns = 16;
 
 //===== Leap motion ======
 
+  
 $(document).ready(function() {
       window.controller = new Leap.Controller({enableGestures: true});
 
       var swiper = controller.gesture('swipe');
+    // var tapper = controller.gesture('screenTap');
 
       var tolerance = 50;
       var cooloff = 100;
@@ -42,17 +44,32 @@ $(document).ready(function() {
           var yDir = Math.abs(g.translation()[1]) > tolerance ? (g.translation()[1] < 0 ? -1 : 1) : 0;
           slider(xDir, yDir);
         }
+
+        
       });
 
       controller.connect();
       updateHighlight();
+
+     
+// ====== NEED TO ADD screenTap listener functionality
+// https://developer.leapmotion.com/documentation/javascript/api/Leap.ScreenTapGesture.html
+
+// var controller = Leap.loop({enableGestures: true}, function(frame){
+//   //... handle frame data
+// });
+
+// controller.on("gesture", function(gesture){
+//   //... handle gesture object
+//  console.log("tap tap tap!");
+// });
+
+
 });//docReady
 
 
 
-
-
-//====== Game Play ======
+//====== Game Play ====== 
 
 $(document).ready(function(){
     resetBoard();
