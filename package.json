@@ -1,0 +1,27 @@
+{
+  "name": "crappy-birds",
+  "version": "1.0.0",
+  "description": "best game in the planet",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.15.2",
+    "express-handlebars": "^3.0.0",
+    "mongoose": "^4.9.3",
+    "node": "^0.0.0",
+    "react": "^15.5.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tanysaur/crappy-birds.git"
+  },
+  "author": "The A-team",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tanysaur/crappy-birds/issues"
+  },
+  "homepage": "https://github.com/tanysaur/crappy-birds#readme"
+}
