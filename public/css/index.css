@@ -1,0 +1,54 @@
+/*
+div {
+   padding: 0px;
+    margin-bottom: 10px; 
+   border: 5px;
+}
+
+#play-button {
+  width: 10%;
+  margin: 0 auto;
+}
+
+.left {
+  border-right: 1px solid #333;
+}
+
+#pbut {
+  margin: 35px;
+}
+
+#logo {
+  height: auto;
+  width: auto;
+  max-height: 200px;
+}*/
+
+/*styling for gestures*/
+.highlight {
+    border: 5px red solid !important;
+  }
+
+  #slide {
+    background-color:white;
+    float: left;
+    width: 100%;
+    height: 100%;
+  }
+
+  .grid div {
+    width: 120px;
+    height: 120px;
+    float: left;
+    border: 5px black solid;
+  }
+
+  .grid img{
+    width: 100%;
+  }
+
+  #right-col, #left-col {
+    border: 5px blue solid;
+  }  
+/*
+  gestures*/
