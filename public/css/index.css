@@ -50,18 +50,25 @@ div {
     width: 100%;
   }
 
-  #right-col, #left-col {
+  /*#right-col, #left-col {
     border: 2px blue solid;
-  }  
+  }  */
 
-  .displayBlur{
+  /*.displayBlur{
     filter: blur(10px);
+  }*/
+
+  .displayBird{
+    background-image: url("./images/bird.png");
   }
   
-  .blurOff{
+  /*.blurOff{
     filter: none;
-  }
+  }*/
 
+  .birdOff{
+    background-image: none;
+  }
 
 /*
   gestures*/

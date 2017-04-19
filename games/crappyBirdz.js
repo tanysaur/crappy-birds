@@ -106,7 +106,7 @@ $(document).keyup(function(event){ // keypress? what is the leapmotion equivalen
                 
 
                 //unblur picture
-                $("#" + d0_0).addClass("blurOff"); 
+                $("#" + d0_0).addClass("birdOff"); 
                 //show picture_score
 
                 scoreP1 += picture_score; 
@@ -120,7 +120,7 @@ $(document).keyup(function(event){ // keypress? what is the leapmotion equivalen
                 //computer chooses unused cell, 
 
                 //unblur picture of chosen cell
-                $("#" + d0_0).addClass("blurOff");
+                $("#" + d0_0).addClass("birdOff");
 
                 scoreP2 += picture_score;
 
