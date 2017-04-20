@@ -58,16 +58,16 @@ div {
     filter: blur(10px);
   }*/
 
-  .displayBird{
+  /*.displayBird{
     background-image: url("./images/bird.png");
-  }
+  }*/
   
   /*.blurOff{
     filter: none;
   }*/
 
-  .birdOff{
-    background-image: none;
+  .birdOff img{
+    display: none;
   }
 
 /*
