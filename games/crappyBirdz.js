@@ -7,7 +7,9 @@ var winner;
 var chosenCells = [];
 var turns = 16;
 var x = 0, y = 0;
+var picture_score = 10;
 
+var chosenCell;
 //===== Leap motion ======
 
 
@@ -102,12 +104,25 @@ $(document).ready(function () {
 
 $(document).ready(function () {
     //resetBoard();
-   
-    $('.grid div').on('click',  function () {
+
+    $('.grid div').on('click', function () {
         $('#' + this.id + ' .one').hide()
         $('#' + this.id + ' .two').show()
-      console.log(this.id);
-    }); 
+        $("#picture_score").html()
+
+        chosenCell = this.id;
+
+        console.log(chosenCell);
+
+    });
+
+
+    $('.grid img').on('click', function () {
+        // var secondImg = $(".two img").last();
+        // console.log(secondImg);
+       var second =  $(this).last('img').find('.two');
+       console.log(second);
+    });
 }); // docReady
 
 
@@ -117,9 +132,9 @@ $(document).keyup(function (event) { // keypress? what is the leapmotion equival
     //Player presses spacebar to start the game
     if (event.keyCode == 32) {
         console.log("Game starts!");
-    initGame();
-    resetBoard();
-    gameStarts();
+        initGame();
+        resetBoard();
+        gameStarts();
     }
 
 
@@ -136,23 +151,29 @@ function initGame() {
 
 function selectTile() {
     var itemsArray = [
-       {
+        {
             picture: "../public/images/bird_2.jpeg",
             score: 500
         }, {
-            picture: "../public/images/bird.png",
+            picture: "../public/images/bird1.jpeg",
             score: -200
         }, {
             picture: "../public/images/car-poop.jpeg",
             score: -100
         }, {
-            picture: "../public/images/bird.png",
+            picture: "../public/images/bird2.jpeg",
             score: 700
+        }, {
+            picture: "../public/images/bird3.jpg",
+            score: 1000
+        }, {
+            picture: "../public/images/brd4.jpeg",
+            score: -500
         }];
 
     var randomItem = Math.floor(Math.random() * itemsArray.length);
-   //console.log(itemsArray[0]);
-   console.log(randomItem + " " + itemsArray[randomItem].picture + " " + itemsArray[randomItem].score);
+    //console.log(itemsArray[0]);
+    console.log(randomItem + " " + itemsArray[randomItem].picture + " " + itemsArray[randomItem].score);
 
     return itemsArray[randomItem];
 }
@@ -167,14 +188,18 @@ function resetBoard() {
 
             //insert img to DOM, data-attr: picture value
             $('#d' + row + '_' + col)
-                .append('<img class="two" style="display:none" src="' + item.picture + '"/>')
-                .data('score', item.score);
-                
+                .append('<img class="two" value="' + item.score + ' "style="display:none" src="' + item.picture + '"/>')
+            //.data('score', item.score);
+
         }
     }
 }//resetBoard
 
 function gameStarts() {
+    var options = ["#d0_0", "#d0_1", "#d1_2", "#d0_3",
+        "#d1_0", "#d1_1", "#d1_2", "#d1_3",
+        "#d2_0", "#d2_1", "#d2_2", "#d2_3",
+        "#d3_0", "#d3_1", "#d3_2", "#d3_3"];
     while (turns != 0) {
         //p1 starts
         //player chooses cell, if cell is used, show error ======= leapmotion: tap
@@ -184,23 +209,35 @@ function gameStarts() {
         //     var pusheen = chosenCells.push($("#d" + x + "_" + y));
         //     console.log(pusheen);
         // });
-       // $("#d" + x + "_" + y).addClass("birdOff");
+        // $("#d" + x + "_" + y).addClass("birdOff");
         //show picture_score
 
+        options.pop(chosenCell);
+        console.log(options.length);
+
         scoreP1 += picture_score;
+        $("#p1-score").html(scoreP1);
 
         //mark cell as used using its data attr, class="used", we can also use backend to store the score & or picture
+        //chosen
 
         //decrement turns
         turns--;
 
+        $("#game-status").text("The computer is thinking...");
+
+        // apply status
+
         //p2 or computer picks random cell
         //computer chooses unused cell, 
-         var randomChoice = Math.floor((Math.random() * 16) + 1);
+
+        var randomChoice = Math.floor((Math.random() * 16) + 1); // #dx_y
         //unblur picture of chosen cell
         //$("#d" + x + "_" + y).addClass("birdOff");
 
+        // if (randomChoice != )
         scoreP2 += picture_score;
+        $("#p2-score").html(scoreP2);
 
         //marks cell as used using its data attr, class="used";
 
@@ -212,7 +249,7 @@ function gameStarts() {
 }//gameStarts
 
 
-$('#d' + x + '_' + y).on('click', function(){
+$('#d' + x + '_' + y).on('click', function () {
     console.log('this');
 });
 
@@ -223,10 +260,10 @@ function declareWinner() {
     } else if (scoreP1 < scoreP2) {
         console.log("Player 2 wins!");
         $("#game-status").text("Player 2 wins the game!");
-    } else if (scoreP1 === scoreP2){
+    } else if (scoreP1 === scoreP2) {
         console.log("It's a tie!");
-        $("#game-status").text("It's a tie!'");
-    } else{
+        $("#game-status").text("It's a tie!");
+    } else {
         console.log("OH CRAP!");
     }
 }//declare winner
