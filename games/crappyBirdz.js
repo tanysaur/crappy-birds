@@ -4,27 +4,33 @@ var scoreP1 = 0;
 var scoreP2 = 0;
 
 var winner;
-var chosenCells = [];
+var p1ChosenCells = [];
 var turns = 16;
 var x = 0, y = 0;
 var picture_score = 10;
 
-var chosenCell;
+var p1ChosenCell;
+var p2ChosenCell;
+
+var keyTapped;
+var highlightedTile;
+
+var options = [];
 //===== Leap motion ======
 
 
+function updateHighlight(a, b) {
+    console.log("highlighted: " + a + "_" + b)
+    $('.grid div').removeClass('highlight');
+    $('.grid #d' + a + "_" + b).addClass('highlight');
+    highlightedTile = $('#d' + a + "_" + b);
+    console.log("highlighted tile div: " + highlightedTile);
+}
+
 $(document).ready(function () {
 
-
     var frameLen = 0;
-    var highlightedTile;
-    function updateHighlight(a, b) {
-        console.log(a, b)
-        $('.grid div').removeClass('highlight');
-        $('.grid #d' + a + "_" + b).addClass('highlight');
-        highlightedTile = $('#d' + a + "_" + b);
 
-    }
     updateHighlight(0, 0);
 
     var prev = 0;
@@ -39,8 +45,11 @@ $(document).ready(function () {
             switch (gesture.type) {
                 case "keyTap":
                     console.log("Key Tap Gesture");
+                    // updateHighlight();
                     highlightedTile.click();
-                    console.log(highlightedTile)
+                    // console.log("my highlighted tile is : " + highlightedTile)
+                    $("#game-status").text("Awesome!");
+                    keyTapped = true;
                     break;
                 // case "screenTap":
                 //     console.log("Screen Tap Gesture");
@@ -48,8 +57,8 @@ $(document).ready(function () {
                 case "swipe":
                     console.log("Swipe Gesture");
                     var swipedAt = new Date().getTime();
-                    console.log(prev)
-                    console.log(swipedAt);
+                    // console.log(prev)
+                    // console.log(swipedAt);
                     if ((swipedAt - prev) > 500) {
                         var isHorizontal = Math.abs(gesture.direction[0]) > Math.abs(gesture.direction[1]);
                         //Classify as right-left or up-down
@@ -94,11 +103,7 @@ $(document).ready(function () {
 
     });
 
-
-
 });//docReady
-
-
 
 //====== Game Play ====== 
 
@@ -108,21 +113,35 @@ $(document).ready(function () {
     $('.grid div').on('click', function () {
         $('#' + this.id + ' .one').hide()
         $('#' + this.id + ' .two').show()
-        $("#picture_score").html()
 
-        chosenCell = this.id;
+        p1ChosenCell = this.id;
 
-        console.log(chosenCell);
+        var r1 = p1ChosenCell.charAt(1);
+        var c1 = p1ChosenCell.charAt(3);
 
+        updateHighlight(r1, c1);
+
+
+         // this doesn't work yet
+       // var valScore = document.getElementById('.two').getAttribute('score');
+        
+        //show picture score value to the page
+        // $("#picture_score").html(valScore) // how do i take the VALUE from the img tag i.e. value=300 and update my html ???
+
+
+        keyTapped = true;
+        console.log("p1ChosenCell: " + p1ChosenCell);
+        // console.log("score:" + valScore)
     });
 
 
-    $('.grid img').on('click', function () {
-        // var secondImg = $(".two img").last();
-        // console.log(secondImg);
-       var second =  $(this).last('img').find('.two');
-       console.log(second);
-    });
+    // $('.grid img').on('click', function () {
+    //     // var secondImg = $(".two img").last();
+    //     // console.log(secondImg);
+    //     var second = $(this).last('img').find('.two');
+    //     console.log(second);
+    // });
+
 }); // docReady
 
 
@@ -137,7 +156,6 @@ $(document).keyup(function (event) { // keypress? what is the leapmotion equival
         gameStarts();
     }
 
-
 });
 
 
@@ -146,6 +164,10 @@ $(document).keyup(function (event) { // keypress? what is the leapmotion equival
 function initGame() {
     p1 = 0;
     p2 = 0;
+    var p1ChosenCells = [];
+    var turns = 16;
+    var x = 0, y = 0;
+    var keyTapped = false;
 
 }//initGame
 
@@ -188,32 +210,63 @@ function resetBoard() {
 
             //insert img to DOM, data-attr: picture value
             $('#d' + row + '_' + col)
-                .append('<img class="two" value="' + item.score + ' "style="display:none" src="' + item.picture + '"/>')
+                .append('<img class="two" data-score="' + item.score + ' "style="display:none" src="' + item.picture + '"/>')
+                //.css('<img ')
             //.data('score', item.score);
 
         }
     }
 }//resetBoard
 
+function computersTurn() {
+
+    //updated
+    $("#game-status").text("The computer is thinking...");
+
+    p2ChosenCell = options[Math.floor((Math.random() * options.length))]; // #dx_y
+    console.log("p2: " + p2ChosenCell);
+
+    var r2 = p2ChosenCell.charAt(2);
+    var c2 = p2ChosenCell.charAt(4);
+
+    console.log(p2ChosenCell);;
+
+    updateHighlight(r2, c2);
+
+    $(p2ChosenCell).click();
+
+    options.pop(p2ChosenCell);
+
+    // if (p2ChosenCell != )
+    scoreP2 += picture_score;
+    $("#p2-score").html(scoreP2);
+    //decrement turns
+    turns--;
+    keyTapped = true;
+}
+
 function gameStarts() {
-    var options = ["#d0_0", "#d0_1", "#d1_2", "#d0_3",
+    options = ["#d0_0", "#d0_1", "#d1_2", "#d0_3",
         "#d1_0", "#d1_1", "#d1_2", "#d1_3",
         "#d2_0", "#d2_1", "#d2_2", "#d2_3",
         "#d3_0", "#d3_1", "#d3_2", "#d3_3"];
-    while (turns != 0) {
-        //p1 starts
-        //player chooses cell, if cell is used, show error ======= leapmotion: tap
 
-        // $("#d" + x + "_" + y).click( function(){
-        //     console.log("i clicked d_" + x + y);
-        //     var pusheen = chosenCells.push($("#d" + x + "_" + y));
-        //     console.log(pusheen);
-        // });
-        // $("#d" + x + "_" + y).addClass("birdOff");
+    // while (turns != 0) {
+    //p1 starts
+    //player chooses cell by tapping
+
+
+    //toggles the pic that was clicked
+
+    if (keyTapped == true) {
+        console.log("this is p1: " + p1ChosenCell);
+
+        options.pop(p1ChosenCell);
+
+        console.log("da");
+        console.log(options.length + "_" + options);
+
         //show picture_score
-
-        options.pop(chosenCell);
-        console.log(options.length);
 
         scoreP1 += picture_score;
         $("#p1-score").html(scoreP1);
@@ -224,34 +277,19 @@ function gameStarts() {
         //decrement turns
         turns--;
 
-        $("#game-status").text("The computer is thinking...");
 
-        // apply status
+        // player 2's turn, with a 5 sec delay
+        var p2Turn = setInterval(
+            computersTurn(), 5000);
 
-        //p2 or computer picks random cell
-        //computer chooses unused cell, 
-
-        var randomChoice = Math.floor((Math.random() * 16) + 1); // #dx_y
-        //unblur picture of chosen cell
-        //$("#d" + x + "_" + y).addClass("birdOff");
-
-        // if (randomChoice != )
-        scoreP2 += picture_score;
-        $("#p2-score").html(scoreP2);
-
-        //marks cell as used using its data attr, class="used";
-
-        //decrement turns
-        turns--;
     }
-    declareWinner();
+
+   
+    // }
+    //declareWinner();
 
 }//gameStarts
 
-
-$('#d' + x + '_' + y).on('click', function () {
-    console.log('this');
-});
 
 function declareWinner() {
     if (scoreP1 > scoreP2) {
