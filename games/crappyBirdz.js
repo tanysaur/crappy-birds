@@ -47,6 +47,7 @@ $(document).ready(function () {
                     console.log("Key Tap Gesture");
                     // updateHighlight();
                     highlightedTile.click();
+                    document.getElementById("splat").play();
                     // console.log("my highlighted tile is : " + highlightedTile)
                     $("#game-status").text("Awesome!");
                     keyTapped = true;
