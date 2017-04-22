@@ -39,11 +39,18 @@ div {
     height: 100%;
   }
 
-  .grid div {
+  .grid .card {
     width: 120px;
     height: 120px;
     float: left;
     border: 5px black solid;
+    position: relative;
+  }
+
+  .grid .card .cover, .grid .card .picture {
+    position: absolute;
+    top: 0;
+    left: 0;
   }
 
   .grid img{

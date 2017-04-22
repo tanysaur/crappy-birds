@@ -109,11 +109,37 @@ $(document).ready(function () {
 //====== Game Play ====== 
 
 $(document).ready(function () {
-    //resetBoard();
+    resetBoard();
 
-    $('.grid div').on('click', function () {
-        $('#' + this.id + ' .one').hide()
-        $('#' + this.id + ' .two').show()
+    // $('.grid div').on('click', function () {
+    //     $('#' + this.id + ' .one').hide()
+    //     $('#' + this.id + ' .two').show()
+
+    //     p1ChosenCell = this.id;
+
+    //     var r1 = p1ChosenCell.charAt(1);
+    //     var c1 = p1ChosenCell.charAt(3);
+
+    //     updateHighlight(r1, c1);
+
+
+    //      // this doesn't work yet
+    //    // var valScore = document.getElementById('.two').getAttribute('score');
+        
+    //     //show picture score value to the page
+    //     // $("#picture_score").html(valScore) // how do i take the VALUE from the img tag i.e. value=300 and update my html ???
+
+
+    //     keyTapped = true;
+    //     console.log("p1ChosenCell: " + p1ChosenCell);
+    //     // console.log("score:" + valScore)
+    // });
+
+    $('body').on('click', '.card', function(event) {
+        $(event.currentTarget).find('.one').addClass('hide');
+        $(event.currentTarget).find('.picture').removeClass('hide');
+
+        var picture_score = $(event.currentTarget).find('.picture').attr('value');
 
         p1ChosenCell = this.id;
 
@@ -122,19 +148,12 @@ $(document).ready(function () {
 
         updateHighlight(r1, c1);
 
-
-         // this doesn't work yet
-       // var valScore = document.getElementById('.two').getAttribute('score');
-        
-        //show picture score value to the page
-        // $("#picture_score").html(valScore) // how do i take the VALUE from the img tag i.e. value=300 and update my html ???
-
-
         keyTapped = true;
         console.log("p1ChosenCell: " + p1ChosenCell);
-        // console.log("score:" + valScore)
-    });
 
+        scoreP1 += parseInt(picture_score);
+        $("#p1-score").html(scoreP1);
+    });
 
     // $('.grid img').on('click', function () {
     //     // var secondImg = $(".two img").last();
@@ -203,20 +222,21 @@ function selectTile() {
 
 //resets board with random pictures
 function resetBoard() {
-
+    var cardsHTML = '';
     // 4x4 2-dimensional array
     for (var row = 0; row < 4; row++) {
+        cardsHTML = cardsHTML + '<div class="row">';
         for (var col = 0; col < 4; col++) {
             var item = selectTile();
-
-            //insert img to DOM, data-attr: picture value
-            $('#d' + row + '_' + col)
-                .append('<img class="two" data-score="' + item.score + ' "style="display:none" src="' + item.picture + '"/>')
-                //.css('<img ')
-            //.data('score', item.score);
-
+            cardsHTML = cardsHTML + '<div id="d' + row + '_' + col+ '" class="card">';
+            cardsHTML = cardsHTML + '<img class="picture hide" value="' + item.score + '" src="' + item.picture + '" />';
+            cardsHTML = cardsHTML + '<img class="one cover" src="../public/images/bird.png" />';
+            cardsHTML = cardsHTML + '</div>';
         }
+        cardsHTML = cardsHTML + '</div>';
     }
+
+    $('.grid').html(cardsHTML);
 }//resetBoard
 
 function computersTurn() {
